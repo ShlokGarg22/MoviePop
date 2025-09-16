@@ -2,9 +2,15 @@ import { useState } from 'react'
 import './App.css'
 
 // Environment-based API URL for deployment
-const API_URL = import.meta.env.PROD 
-  ? 'https://movie-recommender-backend-ze14.onrender.com' 
-  : 'http://localhost:5001';
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5001'
+  : 'https://movie-recommender-backend-ze14.onrender.com';
+
+console.log('🔍 Debug Info:');
+console.log('Current hostname:', window.location.hostname);
+console.log('API_URL being used:', API_URL);
+console.log('Environment PROD:', import.meta.env.PROD);
+console.log('Environment MODE:', import.meta.env.MODE);
 
 function App() {
   const [groupSize, setGroupSize] = useState(1)
@@ -78,19 +84,31 @@ function App() {
         description: `Person ${index + 1} wants ${member.mood} ${member.genre} movies`
       }))
 
+      console.log('🚀 Making API request to:', `${API_URL}/api/recommend`);
+      console.log('📝 Request payload:', { answers });
+
       const response = await fetch(`${API_URL}/api/recommend`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers })
       })
 
-      if (!response.ok) throw new Error('Failed to get recommendations')
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ Response error:', errorText);
+        throw new Error(`Failed to get recommendations: ${response.status} ${errorText}`)
+      }
       
       const data = await response.json()
+      console.log('✅ Response data:', data);
       setRecommendations(data.recommendations || [])
       setCurrentStep('results')
     } catch (err) {
-      setError('Failed to get recommendations. Make sure the backend is running.')
+      console.error('💥 Fetch error:', err);
+      setError(`Failed to get recommendations: ${err.message}`)
     } finally {
       setLoading(false)
     }

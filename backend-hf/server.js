@@ -12,24 +12,31 @@ const PORT = process.env.PORT || 5001;
 // Initialize Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// Configure CORS for production
+// Configure CORS for production - simplified for debugging
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://phenomenal-sunburst-f043da.netlify.app',  // Your actual Netlify URL
-        'https://*.netlify.app',  // Allow any Netlify subdomain
-        'https://netlify.app'     // Allow direct netlify.app
-      ]
-    : [
-        'http://localhost:5173',
-        'http://localhost:3000'
-      ],
+  origin: [
+    'https://phenomenal-sunburst-f043da.netlify.app',  // Your Netlify app
+    'http://localhost:5173',   // Local development
+    'http://localhost:3000',   // Alternative local port
+    'https://netlify.app',     // Netlify domain
+    'https://*.netlify.app'    // Any Netlify subdomain
+  ],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Debug middleware to log requests
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  console.log('Origin:', req.headers.origin);
+  console.log('Headers:', Object.keys(req.headers));
+  next();
+});
 
 // Initialize embedding pipeline (loads once)
 let embedder = null;
