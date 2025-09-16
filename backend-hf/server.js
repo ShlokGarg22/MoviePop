@@ -88,7 +88,18 @@ app.post('/api/recommend', async (req, res) => {
         id: movie.id,
         title: movie.title,
         description: movie.description,
-        similarity
+        similarity,
+        // Include TMDB metadata if available
+        ...(movie.tmdb_id && {
+          tmdb_id: movie.tmdb_id,
+          poster_url: movie.poster_url,
+          backdrop_url: movie.backdrop_url,
+          release_date: movie.release_date,
+          vote_average: movie.vote_average,
+          vote_count: movie.vote_count,
+          genre_ids: movie.genre_ids,
+          popularity: movie.popularity
+        })
       };
     });
 

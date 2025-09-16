@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "embed": "node scripts/embedMovies.js"
+    "embed": "node scripts/embedMovies.js",
+    "embed-tmdb": "node scripts/embedMoviesTMDB.js",
+    "embed-mock": "node scripts/embedMovies.js"
   },
   "dependencies": {
     "express": "^4.18.2",
