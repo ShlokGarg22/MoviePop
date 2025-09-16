@@ -16,10 +16,9 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        'https://movie-night-app.netlify.app',  // Common Netlify naming pattern
+        'https://phenomenal-sunburst-f043da.netlify.app',  // Your actual Netlify URL
         'https://*.netlify.app',  // Allow any Netlify subdomain
-        'https://netlify.app',    // Allow direct netlify.app
-        '*'  // Temporary: Allow all origins for testing
+        'https://netlify.app'     // Allow direct netlify.app
       ]
     : [
         'http://localhost:5173',
