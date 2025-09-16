@@ -43,6 +43,12 @@ function App() {
         { value: 'horror', text: 'Horror & Thriller' },
         { value: 'romance', text: 'Romance & Love Stories' }
       ]
+    },
+    {
+      id: 'description',
+      question: "Describe the perfect movie for you tonight",
+      type: 'text',
+      placeholder: 'e.g., "A thrilling movie with great plot twists and amazing cinematography" or "Something light and funny to help me relax"'
     }
   ]
 
@@ -79,10 +85,19 @@ function App() {
     setError('')
     
     try {
-      const answers = Object.values(memberAnswers).map((member, index) => ({
-        member: index + 1,
-        description: `Person ${index + 1} wants ${member.mood} ${member.genre} movies`
-      }))
+      const answers = Object.values(memberAnswers).map((member, index) => {
+        let description = `Person ${index + 1} wants ${member.mood} ${member.genre} movies`;
+        
+        // Add their descriptive text if provided
+        if (member.description && member.description.trim()) {
+          description += `. They specifically describe their ideal movie as: "${member.description.trim()}"`;
+        }
+        
+        return {
+          member: index + 1,
+          description
+        };
+      })
 
       console.log('🚀 Making API request to:', `${API_URL}/api/recommend`);
       console.log('📝 Request payload:', { answers });
@@ -178,20 +193,35 @@ function App() {
             {questions.map(question => (
               <div key={question.id} className="question">
                 <h3>{question.question}</h3>
-                <div className="options">
-                  {question.options.map(option => (
-                    <label key={option.value} className="option">
-                      <input
-                        type="radio"
-                        name={question.id}
-                        value={option.value}
-                        checked={memberAnswers[currentMember]?.[question.id] === option.value}
-                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      />
-                      <span className="option-text">{option.text}</span>
-                    </label>
-                  ))}
-                </div>
+                
+                {question.type === 'text' ? (
+                  // Text input question
+                  <div className="text-input-container">
+                    <textarea
+                      className="text-input"
+                      placeholder={question.placeholder}
+                      value={memberAnswers[currentMember]?.[question.id] || ''}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      rows={3}
+                    />
+                  </div>
+                ) : (
+                  // Multiple choice question
+                  <div className="options">
+                    {question.options.map(option => (
+                      <label key={option.value} className="option">
+                        <input
+                          type="radio"
+                          name={question.id}
+                          value={option.value}
+                          checked={memberAnswers[currentMember]?.[question.id] === option.value}
+                          onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                        />
+                        <span className="option-text">{option.text}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -70,8 +70,11 @@ app.post('/api/recommend', async (req, res) => {
     // Initialize embedder
     const embedder = await initializeEmbedder();
 
-    // Combine all user preferences
-    const userText = answers.map(a => a.description).join(' ');
+    // Combine all user preferences with emphasis on descriptive text
+    let userText = answers.map(a => a.description).join(' ');
+    
+    // Log the user preferences for debugging
+    console.log('🎯 User preferences text:', userText);
     
     // Generate embedding for user preferences
     const userEmbedding = await embedder(userText, { pooling: 'mean', normalize: true });
