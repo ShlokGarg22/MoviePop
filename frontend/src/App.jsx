@@ -3,7 +3,7 @@ import './App.css'
 
 // Environment-based API URL for deployment
 const API_URL = import.meta.env.PROD 
-  ? 'https://movie-recommender-backend.onrender.com' 
+  ? 'https://movie-recommender-backend-ze14.onrender.com' 
   : 'http://localhost:5001';
 
 function App() {
