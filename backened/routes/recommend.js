@@ -12,11 +12,11 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const googleApiKey = process.env.GOOGLE_API_KEY;
-const genAI = new GoogleGenerativeAI({ apiKey: googleApiKey });
+const googleApiKey = process.env.GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(googleApiKey);
 
 async function embedAnswer(text){
-    const model = genAI.getGenerativeModel({model:'embedding-gecko-001'});
+    const model = genAI.getGenerativeModel({model:'textembedding-gecko-001'});
     const result = await model.embedContent(text);
     return result.embedding.values;
 }

@@ -41,10 +41,10 @@ function delay(ms) {
       
       console.log(`✓ Inserted: ${movie.title}`);
       
-      // Add delay between requests (2 seconds to respect rate limits)
+      // Add delay between requests (10 seconds to respect rate limits)
       if (i < movies.length - 1) {
-        console.log("Waiting 2 seconds before next request...");
-        await delay(2000);
+        console.log("Waiting 10 seconds before next request...");
+        await delay(10000);
       }
       
     } catch (error) {

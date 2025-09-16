@@ -1,0 +1,187 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  color: #2c3e50;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #7f8c8d;
+  font-size: 1.1em;
+}
+
+.input-section {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.input-section h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.description-input {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.description-input textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.description-input textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  background: #c0392b;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.add-btn {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-btn:hover {
+  background: #7f8c8d;
+}
+
+.recommend-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.recommend-btn:hover {
+  background: #2980b9;
+}
+
+.recommend-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #fee;
+  border: 1px solid #e74c3c;
+  color: #c0392b;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.results-section {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.results-section h2 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.movie-list {
+  display: grid;
+  gap: 20px;
+}
+
+.movie-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.movie-card h3 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1.3em;
+}
+
+.movie-card p {
+  color: #5d6d7e;
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+
+.similarity {
+  background: #3498db;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 15px;
+  }
+  
+  .buttons {
+    flex-direction: column;
+  }
+  
+  .add-btn, .recommend-btn {
+    width: 100%;
+  }
+}

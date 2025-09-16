@@ -1,11 +1,14 @@
-import exprses from 'express';
+import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
-import recommendRoutes from './routes/recommendRoutes.js';
+import recommendRoutes from './routes/recommend.js';
 dotenv.config();
 
-const app = exprses();
+const app = express();
 
-app.use(exprses.json());
+// Enable CORS for frontend
+app.use(cors());
+app.use(express.json());
 
 app.use('/api/recommend',recommendRoutes);
 
