@@ -12,22 +12,14 @@ const PORT = process.env.PORT || 5001;
 // Initialize Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// Configure CORS for production - simplified for debugging
-const corsOptions = {
-  origin: [
-    'https://phenomenal-sunburst-f043da.netlify.app',  // Your Netlify app
-    'http://localhost:5173',   // Local development
-    'http://localhost:3000',   // Alternative local port
-    'https://netlify.app',     // Netlify domain
-    'https://*.netlify.app'    // Any Netlify subdomain
-  ],
+// Configure CORS for production - Allow all origins temporarily to fix the issue
+app.use(cors({
+  origin: true,  // Allow all origins temporarily
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-};
-
-app.use(cors(corsOptions));
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+}));
 app.use(express.json());
 
 // Debug middleware to log requests
@@ -142,6 +134,16 @@ app.post('/api/recommend', async (req, res) => {
 });
 
 // Health check endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Movie Recommender Backend is running!',
+    status: 'OK', 
+    backend: 'Hugging Face Transformers.js + Supabase',
+    embedding_model: 'Xenova/all-MiniLM-L6-v2',
+    cors: 'Enabled for all origins'
+  });
+});
+
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
