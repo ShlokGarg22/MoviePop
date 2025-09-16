@@ -1,0 +1,28 @@
+# Netlify configuration for Movie Recommender Frontend
+
+[build]
+  # Build command for the frontend
+  command = "npm run build"
+  # Directory containing the built files
+  publish = "dist"
+  # Base directory for build
+  base = "frontend"
+
+# Redirect all routes to index.html for React Router compatibility
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables (set these in Netlify dashboard)
+[build.environment]
+  NODE_VERSION = "18"
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

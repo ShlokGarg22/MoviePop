@@ -1,0 +1,29 @@
+# Render configuration for Movie Recommender Backend
+
+# This file is optional - Render will auto-detect Node.js apps
+# But it's good to be explicit about settings
+
+# Service configuration
+services:
+  - type: web
+    name: movie-recommender-backend
+    env: node
+    region: ohio
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    
+    # Environment variables (set these in Render dashboard)
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false  # Set manually in dashboard
+      - key: SUPABASE_KEY
+        sync: false  # Set manually in dashboard
+      - key: TMDB_API_KEY
+        sync: false  # Set manually in dashboard
+
+# Auto-deploy when main branch is updated
+autoDeploy: true

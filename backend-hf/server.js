@@ -12,7 +12,22 @@ const PORT = process.env.PORT || 5001;
 // Initialize Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-app.use(cors());
+// Configure CORS for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? [
+        'https://your-netlify-app.netlify.app',  // Replace with your actual Netlify URL
+        'https://*.netlify.app'  // Allow any Netlify subdomain
+      ]
+    : [
+        'http://localhost:5173',
+        'http://localhost:3000'
+      ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Initialize embedding pipeline (loads once)
